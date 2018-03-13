@@ -25,18 +25,18 @@ A description of the settable variables for this role should go here, including 
 
 A list of other roles hosted on Galaxy should go here, plus any details in regards to parameters that may need to be set for other roles, or variables that are used from other roles.
 
-## Example Ansible Galaxy Usage
+## Ansible Galaxy Requirements Usage Example
 
-```
+```yaml
 - name: ansible-role-k8s-devkit
   scm: git
   src: git@<BITBUCKET-SERVER>:7999/sopd-sre/ansible-role-k8s-devkit.git
   version: master
 ```
 
-## Example Ansible Local Playbook Usage
+## Ansible Local Playbook Usage Example
 
-```
+```yaml
 - hosts: all
   roles:
     - ansible-role-k8s-devkit
