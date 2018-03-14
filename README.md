@@ -2,7 +2,7 @@
 
 **ansible-role-k8s-devkit**
 
-Configures a machine with tools for Kubernetes and Helm DevOps.
+Configures a machine with tools for Kubernetes, Helm and Docker DevOps.
 
 ## Supported Machine Targets
 
