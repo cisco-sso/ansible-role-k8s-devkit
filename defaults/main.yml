@@ -55,3 +55,11 @@ kubectl_release_checksum_type: sha256
 kubectl_release_url_base: https://storage.googleapis.com/kubernetes-release/release
 kubectl_release_url_suffix: bin/linux/amd64/kubectl
 kubectl_version: v1.9.4  ## ref: https://storage.googleapis.com/kubernetes-release/release/stable.txt
+
+## pip2
+pip2_packages:
+  - name: PyYAML
+
+## pip3
+pip3_packages:
+  - name: PyYAML

@@ -1,0 +1,6 @@
+- name: Install pip2 packages.
+  pip:
+    name: "{{ item }}"
+    version: "{{ item.version | default(omit) }}"
+    executable: pip2.7
+    with_items: "{{ pip2_packages }}"
