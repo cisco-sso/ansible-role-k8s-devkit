@@ -22,6 +22,13 @@
     checksum: "{{ direnv_release_checksum_type }}:{{ direnv_release_checksum }}"
     mode: 0755
 
+- name: Install terraform binary release.
+  get_url:
+    url: "{{ terraform_release_url_base }}/{{ terraform_version }}/{{ terraform_release_url_suffix }}"
+    dest: "{{ terraform_install_path }}"
+    checksum: "{{ terraform_release_checksum_type }}:{{ terraform_release_checksum }}"
+    mode: 0755
+
 - name: Install pip2 packages.
   pip:
     name: "{{ item.name }}"
@@ -35,3 +42,8 @@
     version: "{{ item.version | default(omit) }}"
     executable: pip3.6
   with_items: "{{ pip3_packages }}"
+
+- name: Install yum packages.
+  yum:
+    name: "{{ item.name }}"
+  with_items: "{{ yum_packages }}"
