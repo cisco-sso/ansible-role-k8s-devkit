@@ -14,10 +14,21 @@ direnv_release_url_base: https://github.com/direnv/direnv/releases/download
 direnv_release_url_suffix: direnv.linux-amd64
 direnv_version: v2.15.2  ## ref: https://github.com/direnv/direnv/releases
 
+## docker
+## ref: https://github.com/geerlingguy/ansible-role-docker/issues/45
+docker_compose_path: /usr/local/bin/docker-compose
+docker_compose_version: "1.16.1"
+docker_edition: 'ce'
+docker_install_compose: true
+docker_package: "docker-{{ docker_edition }}"
+docker_package_state: present
+docker_yum_repo_enable_edge: 0
+docker_yum_repo_enable_test: 0
+docker_yum_repo_url: https://download.docker.com/linux/centos/docker-{{ docker_edition }}.repo
+
 ## helm_install_script
 helm_install_script_install_path: /usr/local/bin/helm_install_script
-helm_install_script_release_url_base: https://storage.googleapis.com/kubernetes-release/release
-helm_install_script_release_url_suffix: bin/linux/amd64/helm_install_script
+helm_install_script_release_url: https://raw.githubusercontent.com/kubernetes/helm/master/scripts/get
 
 ## golang
 go_version: 1.10beta2

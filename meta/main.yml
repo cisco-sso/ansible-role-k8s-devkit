@@ -22,8 +22,9 @@ galaxy_info:
 
 dependencies:
 
-  - name: golang
-    src: fubarhouse.golang
+  - src: fubarhouse.golang
     version: 2.7.2
     fubarhouse_user: "{{ pdk_user }}"
     fubarhouse_user_dir: "{{ pdk_user_home }}"
+
+  - src: geerlingguy.docker
