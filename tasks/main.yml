@@ -27,9 +27,8 @@
   register: terraform_detect
 
 - name: (terraform) Detect version.
-  shell: terraform version
+  shell: terraform version || echo "none"
   register: terraform_version_detected
-  when: terraform_detect.stat.exists == True
 
 - name: (terraform) Download binary release archive.
   get_url:
@@ -37,7 +36,7 @@
     dest: "{{ terraform_install_path }}.zip"
     checksum: "{{ terraform_release_checksum_type }}:{{ terraform_release_checksum }}"
     mode: 0644
-  when: terraform_version_detected.stdout != "Terraform v{{ terraform_version }}"
+  when: terraform_version_detected.stdout.join('').replace('Terraform v', '') != terraform_version
 
 - name: (terraform) Install binary release.
   unarchive:
@@ -45,7 +44,7 @@
     dest: "{{ terraform_install_path | dirname }}"
     mode: 0755
     remote_src: yes
-  when: terraform_version_detected.stdout != vars[ 'Terraform v' + terraform_version ]
+  when: terraform_version_detected.stdout.join('').replace('Terraform v', '') != terraform_version
 
 - name: (terraform) Clean binary release archive.
   file:
