@@ -30,3 +30,5 @@
 
 - name: Run Helm install script.
   script: "{{ helm_install_script_install_path }}"
+  environment:
+    PATH: /usr/local/sbin:/sbin:/bin:/usr/sbin:/usr/bin:/root/bin:/usr/local/bin
