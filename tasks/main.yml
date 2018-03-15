@@ -21,3 +21,17 @@
     dest: "{{ direnv_install_path }}"
     checksum: "{{ direnv_release_checksum_type }}:{{ direnv_release_checksum }}"
     mode: 0755
+
+- name: Install pip2 packages.
+  pip:
+    name: "{{ item.name }}"
+    version: "{{ item.version | default(omit) }}"
+    executable: pip2.7
+  with_items: "{{ pip2_packages }}"
+
+- name: Install pip3 packages.
+  pip:
+    name: "{{ item.name }}"
+    version: "{{ item.version | default(omit) }}"
+    executable: pip3.6
+  with_items: "{{ pip3_packages }}"
