@@ -1,13 +1,13 @@
 ---
 # defaults file for ansible-role-pdk
-## ref: http://docs.ansible.com/ansible/latest/playbooks_variables.html
+# ref: http://docs.ansible.com/ansible/latest/playbooks_variables.html
 
+## PDK (Platform Development Kit)
 pdk_user: vagrant
 pdk_user_home: /home/vagrant
 
+## Golang
 go_version: 1.10beta2
 go_get:
   - name: dep
     url: github.com/golang/dep/cmd/dep
-  - name: kubectl
-    url: k8s.io/kubectl
