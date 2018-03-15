@@ -65,3 +65,19 @@ pip3_packages:
   - name: PyYAML
   - name: yq
     version: 2.3.3
+
+## terraform
+terraform_install_path: /usr/local/bin/terraform
+terraform_release_checksum: 6b8a7b83954597d36bbed23913dd51bc253906c612a070a21db373eab71b277b
+terraform_release_checksum_type: sha256
+terraform_release_url_base: "https://releases.hashicorp.com/terraform"
+terraform_release_url_suffix: "terraform_{{ terraform_version }}_linux_amd64.zip"
+terraform_version: 0.11.3 ## ref: https://www.terraform.io/downloads.html
+
+## yum
+yum_packages:
+  - name: emacs
+  - name: gcc
+  - name: git
+  - name: vim-enhanced
+  - name: zsh
