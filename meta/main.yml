@@ -28,3 +28,5 @@ dependencies:
     fubarhouse_user_dir: "{{ pdk_user_home }}"
 
   - src: geerlingguy.docker
+
+  - src: andrewrothstein.kubernetes-helm
