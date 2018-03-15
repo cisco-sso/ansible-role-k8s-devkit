@@ -36,9 +36,6 @@ A list of other roles hosted on Galaxy should go here, plus any details in regar
 
 ```yaml
 - hosts: local
-  tasks:
-    - include_vars:
-        file: /vagrant/config.yaml
   roles:
     - ansible-role-pdk
 ```
