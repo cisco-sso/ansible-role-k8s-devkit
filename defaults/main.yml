@@ -6,6 +6,14 @@
 kdk_user: vagrant
 kdk_user_home: /home/vagrant
 
+## direnv
+direnv_install_path: /usr/local/bin/direnv
+direnv_release_checksum: 0d019efba07feda79f5e0dbd03c531a6ea12612347c80ff2a47e457fdc1326a2
+direnv_release_checksum_type: sha256
+direnv_release_url_base: https://github.com/direnv/direnv/releases/download
+direnv_release_url_suffix: direnv.linux-amd64
+direnv_version: v2.15.2  ## ref: https://github.com/direnv/direnv/releases
+
 ## golang
 go_version: 1.10beta2
 go_get:
@@ -18,14 +26,14 @@ go_get:
 kops_install_path: /usr/local/bin/kops
 kops_release_checksum: 3f806f914d8bf2a0b9b3c6785689257b7aadcd17
 kops_release_checksum_type: sha1
-kops_release_filename: kops-linux-amd64
 kops_release_url_base: https://github.com/kubernetes/kops/releases/download
+kops_release_url_suffix: kops-linux-amd64
 kops_version: 1.8.1  ## ref: https://github.com/kubernetes/kops/releases
 
 ## kubectl
 kubectl_install_path: /usr/local/bin/kubectl
 kubectl_release_checksum: 1649bcda95e1662da0616a5314261285fa4154d769dc4148cc339d859b564c39
 kubectl_release_checksum_type: sha256
-kubectl_release_suffix: bin/linux/amd64/kubectl
-kubectl_release_url_base: https://storage.googleapis.com/kubernetes-release/release/
+kubectl_release_url_base: https://storage.googleapis.com/kubernetes-release/release
+kubectl_release_url_suffix: bin/linux/amd64/kubectl
 kubectl_version: v1.9.4  ## ref: https://storage.googleapis.com/kubernetes-release/release/stable.txt
