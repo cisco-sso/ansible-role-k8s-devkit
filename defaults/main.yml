@@ -1,13 +1,19 @@
 ---
 # defaults file for ansible-role-pdk
+## ref: http://docs.ansible.com/ansible/latest/playbooks_variables.html
 
 users:
   default:
     name: vagrant
     homeDirectory: /home/vagrant
 
-#role_vars:
-#  fubarhouse.golang:
-#    GOPATH: /home/vagrant/go
-#    GOROOT: /usr/local/go
-#    go_version: 1.10
+golang:
+  version: 1.10beta2
+  env:
+    GOPATH: /home/vagrant/go
+    GOROOT: /usr/local/go
+  packages:
+    get:
+      - name: dep
+        url: github.com/golang/dep/cmd/dep
+    install: []
