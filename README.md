@@ -7,7 +7,6 @@ Configures a machine with tools for Kubernetes, Helm and Docker DevOps.
 ## Supported Machine Targets
 
 - [k8s-devkit](https://github.com/cisco-sso/k8s-devkit)
-  ([CentOS 7.4 x86_64](https://app.vagrantup.com/bento/boxes/centos-7.4))
 
 ## Requirements
 
@@ -29,17 +28,26 @@ A list of other roles hosted on Galaxy should go here, plus any details in regar
 
 ```yaml
 - name: ansible-role-k8s-devkit
-  scm: git
-  src: git@<BITBUCKET-SERVER>:7999/sopd-sre/ansible-role-k8s-devkit.git
+  src: git+https://github.com/cisco-sso/ansible-role-k8s-devkit
   version: master
 ```
 
 ## Ansible Local Playbook Usage Example
 
 ```yaml
-- hosts: all
+- hosts: local
+  tasks:
+    - include_vars:
+        file: /vagrant/config.yaml
   roles:
     - ansible-role-k8s-devkit
+```
+
+## Ansible Local Inventory Example
+
+```
+[local]
+localhost ansible_connection=local
 ```
 
 ## License
