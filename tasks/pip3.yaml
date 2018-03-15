@@ -1,0 +1,6 @@
+- name: Install pip3 packages.
+  pip:
+    name: "{{ item.name }}"
+    version: "{{ item.version | default(omit) }}"
+    executable: pip3.6
+    with_items: "{{ pip3_packages }}"
