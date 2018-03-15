@@ -1,9 +1,0 @@
----
-# tasks file for ansible-role-kops
-
-- name: Install kops binary release.
-  get_url:
-    url: "{{ kops_release_url_base }}/{{ kops_version }}/kops-{{ platform }}-{{ arch }}"
-    dest: "{{ kops_install_path }}"
-    checksum: "{{ kops_release_checksum_type }}:{{ kops_release_checksum }}"
-    mode: 0755
