@@ -3,7 +3,7 @@
 
 - name: Install kops binary release.
   get_url:
-    url: "{{ kops_release_url_base }}/{{ kops_version }}/{{ kops_release_filename }}"
+    url: "{{ kops_release_url_base }}/{{ kops_version }}/{{ kops_release_url_suffix }}"
     dest: "{{ kops_install_path }}"
     checksum: "{{ kops_release_checksum_type }}:{{ kops_release_checksum }}"
     mode: 0755
@@ -13,4 +13,11 @@
     url: "{{ kubectl_release_url_base }}/{{ kubectl_version }}/{{ kubectl_release_url_suffix }}"
     dest: "{{ kubectl_install_path }}"
     checksum: "{{ kubectl_release_checksum_type }}:{{ kubectl_release_checksum }}"
+    mode: 0755
+
+- name: Install direnv binary release.
+  get_url:
+    url: "{{ direnv_release_url_base }}/{{ direnv_version }}/{{ direnv_release_url_suffix }}"
+    dest: "{{ direnv_install_path }}"
+    checksum: "{{ direnv_release_checksum_type }}:{{ direnv_release_checksum }}"
     mode: 0755
