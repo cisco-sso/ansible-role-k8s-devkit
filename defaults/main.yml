@@ -63,3 +63,5 @@ pip2_packages:
 ## pip3
 pip3_packages:
   - name: PyYAML
+  - name: yq
+    version: 2.3.3
