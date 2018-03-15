@@ -14,6 +14,11 @@ direnv_release_url_base: https://github.com/direnv/direnv/releases/download
 direnv_release_url_suffix: direnv.linux-amd64
 direnv_version: v2.15.2  ## ref: https://github.com/direnv/direnv/releases
 
+## helm_install_script
+helm_install_script_install_path: /usr/local/bin/helm_install_script
+helm_install_script_release_url_base: https://storage.googleapis.com/kubernetes-release/release
+helm_install_script_release_url_suffix: bin/linux/amd64/helm_install_script
+
 ## golang
 go_version: 1.10beta2
 go_get:
