@@ -22,4 +22,8 @@ galaxy_info:
 
 dependencies:
 
-  - role: fubarhouse.golang
+  - name: golang
+    src: fubarhouse.golang
+    version: 2.7.2
+    fubarhouse_user: "{{ users.default.name }}"
+    fubarhouse_user_dir: "{{ users.default.homeDirectory }}"

@@ -1,8 +1,13 @@
 ---
 # defaults file for ansible-role-k8s-devkit
 
-role_vars:
-  fubarhouse.golang:
-    GOPATH: /home/vagrant/go
-    GOROOT: /usr/local/go
-    go_version: 1.10
+users:
+  default:
+    name: vagrant
+    homeDirectory: /home/vagrant
+
+#role_vars:
+#  fubarhouse.golang:
+#    GOPATH: /home/vagrant/go
+#    GOROOT: /usr/local/go
+#    go_version: 1.10
