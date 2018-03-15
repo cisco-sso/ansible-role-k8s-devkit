@@ -21,14 +21,3 @@
     dest: "{{ direnv_install_path }}"
     checksum: "{{ direnv_release_checksum_type }}:{{ direnv_release_checksum }}"
     mode: 0755
-
-- name: Install Helm install script.
-  get_url:
-    url: "{{ helm_install_script_release_url }}"
-    dest: "{{ helm_install_script_install_path }}"
-    mode: 0755
-
-- name: Run Helm install script.
-  script: "{{ helm_install_script_install_path }}"
-  environment:
-    PATH: /usr/local/sbin:/sbin:/bin:/usr/sbin:/usr/bin:/root/bin:/usr/local/bin

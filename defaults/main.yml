@@ -15,6 +15,7 @@ direnv_release_url_suffix: direnv.linux-amd64
 direnv_version: v2.15.2  ## ref: https://github.com/direnv/direnv/releases
 
 ## docker
+## ref: https://github.com/geerlingguy/ansible-role-docker/blob/master/defaults/main.yml
 ## ref: https://github.com/geerlingguy/ansible-role-docker/issues/45
 docker_compose_path: /usr/local/bin/docker-compose
 docker_compose_version: "1.16.1"
@@ -26,10 +27,6 @@ docker_yum_repo_enable_edge: 0
 docker_yum_repo_enable_test: 0
 docker_yum_repo_url: https://download.docker.com/linux/centos/docker-{{ docker_edition }}.repo
 
-## helm_install_script
-helm_install_script_install_path: /usr/local/bin/helm_install_script
-helm_install_script_release_url: https://raw.githubusercontent.com/kubernetes/helm/master/scripts/get
-
 ## golang
 go_version: 1.10beta2
 go_get:
@@ -37,6 +34,11 @@ go_get:
     url: github.com/spf13/cobra/cobra
   - name: dep
     url: github.com/golang/dep/cmd/dep
+
+## helm
+## ref: https://github.com/andrewrothstein/ansible-kubernetes-helm/blob/master/defaults/main.yml
+kubernetes_helm_ver: v2.8.2
+kubernetes_helm_platform: linux-amd64
 
 ## kops
 kops_install_path: /usr/local/bin/kops
