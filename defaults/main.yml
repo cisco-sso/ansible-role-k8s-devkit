@@ -27,6 +27,19 @@ docker_yum_repo_enable_edge: 0
 docker_yum_repo_enable_test: 0
 docker_yum_repo_url: https://download.docker.com/linux/centos/docker-{{ docker_edition }}.repo
 
+## git repos
+git_repos_accept_hostkey: true
+git_repos:
+  - repo: 'ssh://git@<BITBUCKET-SERVER>:7999/sopd-sre/multihelm.git'
+    dest: /home/vagrant/go/src/github.com/cisco-sso/mh
+    clone: true
+    update: false
+  - repo: 'git@github.com:cisco-sso/k8s-deploy.git'
+    dest: /home/vagrant/go/src/<BITBUCKET-SERVER>/sopd-sre/k8s-deploy
+    clone: true
+    update: false
+    recursive: true
+
 ## golang
 go_version: 1.10beta2
 go_get:
@@ -79,5 +92,7 @@ yum_packages:
   - name: emacs
   - name: gcc
   - name: git
+  - name: screen
+  - name: tmux2u
   - name: vim-enhanced
   - name: zsh

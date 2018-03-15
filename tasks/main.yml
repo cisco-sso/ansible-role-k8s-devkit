@@ -27,7 +27,7 @@
   register: terraform_detect
   changed_when: False
 
-- name: terraform) Detect version.
+- name: terraform | Detect version.
   shell: "{{ terraform_install_path }} version || echo none"
   register: terraform_version_detected
   changed_when: False
@@ -71,3 +71,14 @@
   yum:
     name: "{{ item.name }}"
   with_items: "{{ yum_packages }}"
+
+- name: git | Manage repos.
+  git:
+    repo: "{{ item.repo }}"
+    dest: "{{ item.dest | default(omit) }}"
+    clone: "{{ item.clone | default(true) }}"
+    recursive: "{{ item.recursive | default(omit) }}"
+    update: "{{ item.update | default(true) }}"
+    version: "{{ item.version | default(omit) }}"
+    accept_hostkey: "{{ git_repos_accept_hostkey | default(false) }}"
+  with_items: "{{ git_repos }}"
