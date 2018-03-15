@@ -1,71 +1,73 @@
 ---
 # tasks file for ansible-role-pdk
 
-- name: (kops) Install binary release.
+- name: kops | Install binary release.
   get_url:
     url: "{{ kops_release_url_base }}/{{ kops_version }}/{{ kops_release_url_suffix }}"
     dest: "{{ kops_install_path }}"
     checksum: "{{ kops_release_checksum_type }}:{{ kops_release_checksum }}"
     mode: 0755
 
-- name: (kubectl) Install binary release.
+- name: kubectl | Install binary release.
   get_url:
     url: "{{ kubectl_release_url_base }}/{{ kubectl_version }}/{{ kubectl_release_url_suffix }}"
     dest: "{{ kubectl_install_path }}"
     checksum: "{{ kubectl_release_checksum_type }}:{{ kubectl_release_checksum }}"
     mode: 0755
 
-- name: (direnv) Install binary release.
+- name: direnv | Install binary release.
   get_url:
     url: "{{ direnv_release_url_base }}/{{ direnv_version }}/{{ direnv_release_url_suffix }}"
     dest: "{{ direnv_install_path }}"
     checksum: "{{ direnv_release_checksum_type }}:{{ direnv_release_checksum }}"
     mode: 0755
 
-- name: (terraform) Detect existence.
+- name: terraform | Detect existence.
   stat: "path={{ terraform_install_path }}"
   register: terraform_detect
+  changed_when: False
 
-- name: (terraform) Detect version.
-  shell: terraform version || echo "none"
+- name: terraform) Detect version.
+  shell: "{{ terraform_install_path }} version || echo none"
   register: terraform_version_detected
+  changed_when: False
 
-- name: (terraform) Download binary release archive.
+- name: terraform | Download binary release archive.
   get_url:
     url: "{{ terraform_release_url_base }}/{{ terraform_version }}/{{ terraform_release_url_suffix }}"
     dest: "{{ terraform_install_path }}.zip"
     checksum: "{{ terraform_release_checksum_type }}:{{ terraform_release_checksum }}"
     mode: 0644
-  when: terraform_version_detected.stdout.join('').replace('Terraform v', '') != terraform_version
+  when: not (terraform_version_detected.stdout | match('.*Terraform v' + terraform_version + '.*'))
 
-- name: (terraform) Install binary release.
+- name: terraform | Install binary release.
   unarchive:
     src: "{{ terraform_install_path }}.zip"
     dest: "{{ terraform_install_path | dirname }}"
     mode: 0755
     remote_src: yes
-  when: terraform_version_detected.stdout.join('').replace('Terraform v', '') != terraform_version
+  when: not (terraform_version_detected.stdout | match('.*Terraform v' + terraform_version + '.*'))
 
-- name: (terraform) Clean binary release archive.
+- name: terraform | Clean binary release archive.
   file:
     path: "{{ terraform_install_path }}.zip"
     state: absent
 
-- name: (pip2) Install packages.
+- name: pip2 | Install packages.
   pip:
     name: "{{ item.name }}"
     version: "{{ item.version | default(omit) }}"
     executable: pip2.7
   with_items: "{{ pip2_packages }}"
 
-- name: (pip3) Install packages.
+- name: pip3 | Install packages.
   pip:
     name: "{{ item.name }}"
     version: "{{ item.version | default(omit) }}"
     executable: pip3.6
   with_items: "{{ pip3_packages }}"
 
-- name: (yum) Install packages.
+- name: yum | Install packages.
   yum:
     name: "{{ item.name }}"
   with_items: "{{ yum_packages }}"
