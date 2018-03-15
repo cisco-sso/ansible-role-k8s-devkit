@@ -24,7 +24,7 @@
 
 - name: Install Helm install script.
   get_url:
-    url: "{{ helm_install_script_release_url_base }}/{{ helm_install_script_version }}/{{ helm_install_script_release_url_suffix }}"
+    url: "{{ helm_install_script_release_url }}"
     dest: "{{ helm_install_script_install_path }}"
     mode: 0755
 
