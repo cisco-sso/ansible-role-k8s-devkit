@@ -9,3 +9,5 @@ go_version: 1.10beta2
 go_get:
   - name: dep
     url: github.com/golang/dep/cmd/dep
+  - name: kubectl
+    url: k8s.io/kubectl
