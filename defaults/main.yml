@@ -2,18 +2,10 @@
 # defaults file for ansible-role-k8s-devkit
 ## ref: http://docs.ansible.com/ansible/latest/playbooks_variables.html
 
-users:
-  default:
-    name: vagrant
-    homeDirectory: /home/vagrant
+kdk_user: vagrant
+kdk_user_home: /home/vagrant
 
-golang:
-  version: 1.10beta2
-  env:
-    GOPATH: /home/vagrant/go
-    GOROOT: /usr/local/go
-  packages:
-    get:
-      - name: dep
-        url: github.com/golang/dep/cmd/dep
-    install: []
+go_version: 1.10beta2
+go_get:
+  - name: dep
+    url: github.com/golang/dep/cmd/dep
