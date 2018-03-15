@@ -1,2 +1,8 @@
 ---
 # defaults file for ansible-role-pdk
+
+role_vars:
+  fubarhouse.golang:
+    GOPATH: /home/vagrant/go
+    GOROOT: /usr/local/go
+    go_version: 1.10
