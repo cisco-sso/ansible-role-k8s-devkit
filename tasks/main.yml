@@ -7,3 +7,10 @@
     dest: "{{ kops_install_path }}"
     checksum: "{{ kops_release_checksum_type }}:{{ kops_release_checksum }}"
     mode: 0755
+
+- name: Install kubectl binary release.
+  get_url:
+    url: "{{ kubectl_release_url_base }}/{{ kubectl_version }}/{{ kubectl_release_url_suffix }}"
+    dest: "{{ kubectl_install_path }}"
+    checksum: "{{ kubectl_release_checksum_type }}:{{ kubectl_release_checksum }}"
+    mode: 0755
