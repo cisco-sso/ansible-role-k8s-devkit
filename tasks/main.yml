@@ -66,20 +66,19 @@
     checksum: "{{ minikube_release_checksum_type }}:{{ minikube_release_checksum }}"
     mode: 0755
 
-# REPAIR THIS
-#- name: mc | Get latest sha256 checksum.
-#  uri:
-#    url: "{{ mc_release_checksum_url }}"
-#    return_content: yes
-#  register: mc_release_checksum
-#  changed_when: False
+- name: mc | Get latest sha256 checksum.
+  uri:
+    url: "{{ mc_release_checksum_url }}"
+    return_content: yes
+  register: mc_release_checksum
+  changed_when: False
 
-#- name: mc | Install binary release.
-#  get_url:
-#    url: "{{ mc_release_url }}"
-#    dest: "{{ mc_install_path }}"
-#    checksum: "{{ mc_release_checksum_type }}:{{ mc_release_checksum }}"
-#    mode: 0755
+- name: mc | Install latest binary release.
+  get_url:
+    url: "{{ mc_release_url }}"
+    dest: "{{ mc_install_path }}"
+    checksum: "{{ mc_release_checksum_type }}:{{ mc_release_checksum.content.split(' ')[0] }}"
+    mode: 0755
 
 - name: direnv | Install binary release.
   get_url:

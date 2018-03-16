@@ -98,10 +98,10 @@ minikube_version: v0.25.0  ## ref: https://github.com/kubernetes/minikube/releas
 
 # REPAIR THIS
 ## mc (minio client)
-#mc_install_path: /usr/local/bin/mc
-#mc_release_checksum_type: sha256
-#mc_release_checksum_url: "{{ mc_release_url }}.sha256sum"
-#mc_release_url: https://dl.minio.io/client/mc/release/linux-amd64/mc
+mc_install_path: /usr/local/bin/mc
+mc_release_checksum_type: sha256
+mc_release_checksum_url: "{{ mc_release_url }}.sha256sum"
+mc_release_url: https://dl.minio.io/client/mc/release/linux-amd64/mc
 
 ## pip2
 pip2_packages:
