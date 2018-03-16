@@ -6,6 +6,9 @@
 kdk_user: vagrant
 kdk_user_home: /home/vagrant
 
+## ansible
+ansible_roles_dir: /root/.ansible/roles
+
 ## direnv
 direnv_install_path: /usr/local/bin/direnv
 direnv_release_checksum: 0d019efba07feda79f5e0dbd03c531a6ea12612347c80ff2a47e457fdc1326a2
@@ -51,15 +54,15 @@ go_get:
 
 ## helm
 ## ref: https://github.com/andrewrothstein/ansible-kubernetes-helm/blob/master/defaults/main.yml
+kubernetes_helm_bin_dir: /usr/local/bin
 kubernetes_helm_ver: v2.8.2
 kubernetes_helm_platform: linux-amd64
 
-## NEEDS REPAIR
 ## helm plugins
-#helm_plugins:
-#  - name: helm-s3
-#    url: https://github.com/hypnoglow/helm-s3.git
-#    version: 0.6.0
+helm_plugins:
+  - name: s3
+    url: https://github.com/hypnoglow/helm-s3.git
+    version: 0.6.0
 
 ## jq
 jq_install_path: /usr/local/bin/jq
