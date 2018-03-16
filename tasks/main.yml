@@ -1,6 +1,17 @@
 ---
 # tasks file for ansible-role-k8s-devkit
 
+- name: git | Manage repos.
+  git:
+    repo: "{{ item.repo }}"
+    dest: "{{ item.dest | default(omit) }}"
+    clone: "{{ item.clone | default(true) }}"
+    recursive: "{{ item.recursive | default(omit) }}"
+    update: "{{ item.update | bool | default(true) }}"
+    version: "{{ item.version | default(omit) }}"
+    accept_hostkey: "{{ git_repos_accept_hostkey | default(false) }}"
+  with_items: "{{ git_repos }}"
+
 - name: helm | Create plugins directory.
   file:
     path: "{{ kdk_user_home }}/.helm/plugins"
@@ -136,14 +147,3 @@
   yum:
     name: "{{ item.name }}"
   with_items: "{{ yum_packages }}"
-
-#- name: git | Manage repos.
-#  git:
-#    repo: "{{ item.repo }}"
-#    dest: "{{ item.dest | default(omit) }}"
-#    clone: "{{ item.clone | default(true) }}"
-#    recursive: "{{ item.recursive | default(omit) }}"
-#    update: "{{ item.update | bool | default(true) }}"
-#    version: "{{ item.version | default(omit) }}"
-#    accept_hostkey: "{{ git_repos_accept_hostkey | default(false) }}"
-#  with_items: "{{ git_repos }}"
