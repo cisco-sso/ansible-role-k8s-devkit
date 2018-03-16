@@ -7,10 +7,36 @@
     state: directory
     mode: 0755
 
-# NEEDS REPAIR
-#- name: helm | Install plugins.
-#  command: helm plugin install {{ item.url }} --version {{ item.version }}
-#  with_items: "{{ helm_plugins }}"
+- name: helm | Install plugins.
+  shell: |-
+    #!/bin/bash
+    set -euo pipefail
+    helm="{{ kubernetes_helm_bin_dir }}/helm"
+    HELM_PLUGIN_NAME={{ item.name }}
+    HELM_PLUGIN_VERSION={{ item.version }}
+    HELM_PLUGIN_URL={{ item.url }}
+    
+    echo "## If helm plugin is installed with correct version, exit 0."
+    ${helm} plugin list \
+    | cut -f1-2 \
+    | grep "^${HELM_PLUGIN_NAME}[[:space:]]*${HELM_PLUGIN_VERSION}[[:space:]]*$" \
+    && echo "NOT_CHANGED" \
+    && exit 0
+    
+    echo "## If helm plugin is installed with incorrect version, uninstall and reinstall."
+    ${helm} plugin list \
+    | cut -f1-2 \
+    | grep "^${HELM_PLUGIN_NAME}[[:space:]]*" \
+    && ${helm} plugin remove ${HELM_PLUGIN_NAME}
+    
+    echo "## Install correct version of helm plugin."
+    ${helm} plugin install ${HELM_PLUGIN_URL} --version ${HELM_PLUGIN_VERSION}
+    echo "CHANGED"
+  register: helm_install_plugins_result
+  become: true
+  become_user: "{{ pdk_user }}"
+  with_items: "{{ helm_plugins }}"
+  changed_when: not (helm_install_plugins_result.stdout | search('NOT_CHANGED'))
 
 - name: jq | Install binary release.
   get_url:
