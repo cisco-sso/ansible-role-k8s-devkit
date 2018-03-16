@@ -1,6 +1,24 @@
 ---
 # tasks file for ansible-role-k8s-devkit
 
+- name: helm | Create plugins directory.
+  file:
+    path: "{{ kdk_user_home }}/.helm/plugins"
+    state: directory
+    mode: 0755
+
+# NEEDS REPAIR
+#- name: helm | Install plugins.
+#  command: helm plugin install {{ item.url }} --version {{ item.version }}
+#  with_items: "{{ helm_plugins }}"
+
+- name: jq | Install binary release.
+  get_url:
+    url: "{{ jq_release_url_base }}{{ jq_version }}/{{ jq_release_url_suffix }}"
+    dest: "{{ jq_install_path }}"
+    checksum: "{{ jq_release_checksum_type }}:{{ jq_release_checksum }}"
+    mode: 0755
+
 - name: kops | Install binary release.
   get_url:
     url: "{{ kops_release_url_base }}/{{ kops_version }}/{{ kops_release_url_suffix }}"
@@ -14,6 +32,28 @@
     dest: "{{ kubectl_install_path }}"
     checksum: "{{ kubectl_release_checksum_type }}:{{ kubectl_release_checksum }}"
     mode: 0755
+
+- name: minikube | Install binary release.
+  get_url:
+    url: "{{ minikube_release_url_base }}/{{ minikube_version }}/{{ minikube_release_url_suffix }}"
+    dest: "{{ minikube_install_path }}"
+    checksum: "{{ minikube_release_checksum_type }}:{{ minikube_release_checksum }}"
+    mode: 0755
+
+# REPAIR THIS
+#- name: mc | Get latest sha256 checksum.
+#  uri:
+#    url: "{{ mc_release_checksum_url }}"
+#    return_content: yes
+#  register: mc_release_checksum
+#  changed_when: False
+
+#- name: mc | Install binary release.
+#  get_url:
+#    url: "{{ mc_release_url }}"
+#    dest: "{{ mc_install_path }}"
+#    checksum: "{{ mc_release_checksum_type }}:{{ mc_release_checksum }}"
+#    mode: 0755
 
 - name: direnv | Install binary release.
   get_url:
