@@ -1,6 +1,13 @@
 ---
 # tasks file for ansible-role-pdk
 
+- name: dep | Install binary release.
+  get_url:
+    url: "{{ dep_release_url_base }}/{{ dep_version }}/{{ dep_release_url_suffix }}"
+    dest: "{{ dep_install_path }}"
+    checksum: "{{ dep_release_checksum_type }}:{{ dep_release_checksum }}"
+    mode: 0755
+
 - name: git | Manage repos.
   git:
     repo: "{{ item.repo }}"
@@ -11,6 +18,13 @@
     version: "{{ item.version | default(omit) }}"
     accept_hostkey: "{{ git_repos_accept_hostkey | default(false) }}"
   with_items: "{{ git_repos }}"
+
+- name: gomplate | Install binary release.
+  get_url:
+    url: "{{ gomplate_release_url_base }}/{{ gomplate_version }}/{{ gomplate_release_url_suffix }}"
+    dest: "{{ gomplate_install_path }}"
+    checksum: "{{ gomplate_release_checksum_type }}:{{ gomplate_release_checksum }}"
+    mode: 0755
 
 - name: helm | Create plugins directory.
   file:

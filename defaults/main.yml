@@ -12,6 +12,14 @@ ansible_roles_dir: /root/.ansible/roles
 ## bitbucket
 bitbucket_user: none
 
+## dep
+dep_install_path: /usr/local/bin/dep
+dep_release_checksum: 31144e465e52ffbc0035248a10ddea61a09bf28b00784fd3fdd9882c8cbb2315
+dep_release_checksum_type: sha256
+dep_release_url_base: https://github.com/golang/dep/releases/download
+dep_release_url_suffix: dep-linux-amd64
+dep_version: v0.4.1  ## ref: https://github.com/golang/dep/releases
+
 ## direnv
 direnv_install_path: /usr/local/bin/direnv
 direnv_release_checksum: 0d019efba07feda79f5e0dbd03c531a6ea12612347c80ff2a47e457fdc1326a2
@@ -54,12 +62,18 @@ go_version: 1.10beta2
 go_get:
   - name: cobra
     url: github.com/spf13/cobra/cobra
-  - name: dep
-    url: github.com/golang/dep/cmd/dep
   - name: govc
     url: github.com/vmware/govmomi/govc
   - name: hub
     url: github.com/github/hub
+
+## gomplate
+gomplate_install_path: /usr/local/bin/gomplate
+gomplate_release_checksum: a2587a350a0cfaf386b475e0b65bfcd70b3994a854121e01e16c91a54adf1822
+gomplate_release_checksum_type: sha256
+gomplate_release_url_base: https://github.com/hairyhenderson/gomplate/releases/download
+gomplate_release_url_suffix: gomplate_linux-amd64
+gomplate_version: v2.4.0  ## ref: https://github.com/hairyhenderson/gomplate/releases
 
 ## helm
 ## ref: https://github.com/andrewrothstein/ansible-kubernetes-helm/blob/master/defaults/main.yml
