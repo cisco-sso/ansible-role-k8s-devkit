@@ -145,11 +145,15 @@ terraform_version: 0.11.3 ## ref: https://www.terraform.io/downloads.html
 yum_packages:
   - name: bind-utils
   - name: colordiff
+  - name: dos2unix
   - name: emacs
   - name: gcc
   - name: git
+  - name: graphviz
   - name: nmap
+  - name: pigz
   - name: screen
+  - name: telnet
   - name: tmux2u
   - name: traceroute
   - name: tree
