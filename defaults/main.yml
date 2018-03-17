@@ -143,6 +143,7 @@ terraform_version: 0.11.3 ## ref: https://www.terraform.io/downloads.html
 
 ## yum
 yum_packages:
+  - name: bind-utils
   - name: colordiff
   - name: emacs
   - name: gcc
