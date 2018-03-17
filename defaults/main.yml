@@ -9,6 +9,9 @@ pdk_user_home: /home/vagrant
 ## ansible
 ansible_roles_dir: /root/.ansible/roles
 
+## bitbucket
+bitbucket_user: none
+
 ## direnv
 direnv_install_path: /usr/local/bin/direnv
 direnv_release_checksum: 0d019efba07feda79f5e0dbd03c531a6ea12612347c80ff2a47e457fdc1326a2
@@ -21,27 +24,30 @@ direnv_version: v2.15.2  ## ref: https://github.com/direnv/direnv/releases
 ## ref: https://github.com/geerlingguy/ansible-role-docker/blob/master/defaults/main.yml
 ## ref: https://github.com/geerlingguy/ansible-role-docker/issues/45
 docker_compose_path: /usr/local/bin/docker-compose
-docker_compose_version: "1.16.1"
-docker_edition: 'ce'
+docker_compose_version: 1.16.1
+docker_edition: ce
 docker_install_compose: true
 docker_package: "docker-{{ docker_edition }}"
 docker_package_state: present
 docker_yum_repo_enable_edge: 0
 docker_yum_repo_enable_test: 0
-docker_yum_repo_url: https://download.docker.com/linux/centos/docker-{{ docker_edition }}.repo
+docker_yum_repo_url: "https://download.docker.com/linux/centos/docker-{{ docker_edition }}.repo"
 
 ## git repos
 git_repos_accept_hostkey: true
-git_repos:
-  - repo: 'ssh://***REMOVED***/***REMOVED***/multihelm.git'
-    dest: /home/vagrant/go/src/***REMOVED***/***REMOVED***/multihelm
-    clone: true
-    update: false
-  - repo: 'ssh://***REMOVED***/***REMOVED***/sdp-deploy.git'
-    dest: /home/vagrant/go/src/***REMOVED***/***REMOVED***/sdp-deploy
-    clone: true
-    update: false
-    recursive: true
+git_repos: []
+#  - repo: "ssh://***REMOVED***/~{{ bitbucket_user }}/multihelm.git"
+#    dest: "/home/vagrant/go/src/***REMOVED***/{{ bitbucket_user }}/multihelm"
+#    clone: true
+#    update: false
+#  - repo: "ssh://***REMOVED***/~{{ bitbucket_user }}/sdp-deploy.git"
+#    dest: "/home/vagrant/go/src/***REMOVED***/{{ bitbucket_user }}/sdp-deploy"
+#    clone: true
+#    update: false
+#    recursive: true
+
+## github
+github_user: none
 
 ## golang
 go_version: 1.10beta2
@@ -91,6 +97,12 @@ kubectl_release_url_base: https://storage.googleapis.com/kubernetes-release/rele
 kubectl_release_url_suffix: bin/linux/amd64/kubectl
 kubectl_version: v1.9.4  ## ref: https://storage.googleapis.com/kubernetes-release/release/stable.txt
 
+## mc (minio client)
+mc_install_path: /usr/local/bin/mc
+mc_release_checksum_type: sha256
+mc_release_checksum_url: "{{ mc_release_url }}.sha256sum"
+mc_release_url: https://dl.minio.io/client/mc/release/linux-amd64/mc
+
 ## minikube
 minikube_install_path: /usr/local/bin/minikube
 minikube_release_checksum: 5676f2d4f37f1c6f9cf99d56c7e1a3016976d657f9715e8cb255667a0c5803c1
@@ -99,29 +111,27 @@ minikube_release_url_base: https://storage.googleapis.com/minikube/releases
 minikube_release_url_suffix: minikube-linux-amd64
 minikube_version: v0.25.0  ## ref: https://github.com/kubernetes/minikube/releases
 
-# REPAIR THIS
-## mc (minio client)
-mc_install_path: /usr/local/bin/mc
-mc_release_checksum_type: sha256
-mc_release_checksum_url: "{{ mc_release_url }}.sha256sum"
-mc_release_url: https://dl.minio.io/client/mc/release/linux-amd64/mc
-
 ## pip2
 pip2_packages:
   - name: PyYAML
+    version: 3.12
   - name: virtualenv
+    version: 15.1.0
 
 ## pip3
 pip3_packages:
   - name: PyYAML
+    version: 3.12
   - name: awscli
     version: 1.14.57
   - name: jinja2-cli[yaml]
+    version: 0.6.0
   - name: supernova
     version: 2.2.0
+  - name: virtualenv
+    version: 15.1.0
   - name: yq
     version: 2.3.3
-  - name: virtualenv
 
 ## terraform
 terraform_install_path: /usr/local/bin/terraform
@@ -133,14 +143,14 @@ terraform_version: 0.11.3 ## ref: https://www.terraform.io/downloads.html
 
 ## yum
 yum_packages:
-  - name: emacs
   - name: colordiff
+  - name: emacs
   - name: gcc
   - name: git
   - name: nmap
   - name: screen
-  - name: tree
-  - name: traceroute
   - name: tmux2u
+  - name: traceroute
+  - name: tree
   - name: vim-enhanced
   - name: zsh
