@@ -27,6 +27,9 @@
   shell: |-
     #!/bin/bash
     set -euo pipefail
+    pushd {{ item.dest }}
+    export PATH="/usr/local/bin:${PATH}"
+    dep ensure
     {{ go_bin }} get -f -u {{ item.name }}
   register: go_get_from_repo_result
   with_items: "{{ git_repos }}"
