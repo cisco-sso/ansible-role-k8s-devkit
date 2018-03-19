@@ -1,0 +1,7 @@
+---
+# pre_tasks file for ansible-role-pdk
+
+- name: pdk | Include defaults as vars to allow default config of role dependencies.
+  include_vars:
+    dir: '../defaults'
+    files_matching: 'main.yml'
