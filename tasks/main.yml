@@ -9,6 +9,8 @@
     mode: 0755
 
 - name: git | Manage repos.
+  become: True
+  become_user: "{{ kdk_user }}"
   git:
     repo: "{{ item.repo }}"
     dest: "{{ item.dest | default(omit) }}"
@@ -18,6 +20,18 @@
     version: "{{ item.version | default(omit) }}"
     accept_hostkey: "{{ git_repos_accept_hostkey | default(false) }}"
   with_items: "{{ git_repos }}"
+
+- name: git | Go get repo-based packages.
+  become: True
+  become_user: "{{ kdk_user }}"
+  shell: |-
+    #!/bin/bash
+    set -euo pipefail
+    {{ go_bin }} get -f -u {{ item.name }}
+  register: go_get_from_repo_result
+  with_items: "{{ git_repos }}"
+  when: item.go_get
+  changed_when: True  # Always, because 'go get' doesn't give us any actionable feedback.
 
 - name: gomplate | Install binary release.
   get_url:

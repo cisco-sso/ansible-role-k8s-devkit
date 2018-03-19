@@ -1,6 +1,19 @@
 ---
 # defaults file for ansible-role-k8s-devkit
 # ref: http://docs.ansible.com/ansible/latest/playbooks_variables.html
+#
+# NOTE: Values that override defaults of dependency roles are defined
+#       in meta/main.yml, due to the following Ansible issue:
+#
+#       https://github.com/ansible/ansible/issues/15179
+#
+#       For example, if you wish to override the `defaults` of role
+#       'fubarhouse.golang' for everyone who consumes role
+#       `ansible-role-k8s-devkit`, you should set your overrides at
+#       `ansible-role-k8s-devkit/meta/main.yml`. However, if you only want
+#       to override `fubarhouse.golang` for your own personal use case,
+#       please do so in your local `k8s-devkit/config.yaml` file.
+#
 
 ## kdk
 kdk_user: vagrant
@@ -31,41 +44,25 @@ direnv_version: v2.15.2  ## ref: https://github.com/direnv/direnv/releases
 ## docker
 ## ref: https://github.com/geerlingguy/ansible-role-docker/blob/master/defaults/main.yml
 ## ref: https://github.com/geerlingguy/ansible-role-docker/issues/45
-docker_compose_path: /usr/local/bin/docker-compose
-docker_compose_version: 1.16.1
-docker_edition: ce
-docker_install_compose: true
-docker_package: "docker-{{ docker_edition }}"
-docker_package_state: present
-docker_yum_repo_enable_edge: 0
-docker_yum_repo_enable_test: 0
-docker_yum_repo_url: "https://download.docker.com/linux/centos/docker-{{ docker_edition }}.repo"
+## defaults for docker belong in: ansible-role-k8s-devkit/meta/main.yml
 
 ## git repos
 git_repos_accept_hostkey: true
-git_repos: []
-#  - repo: "ssh://git@<BITBUCKET-SERVER>:7999/~{{ bitbucket_user }}/multihelm.git"
-#    dest: "/home/vagrant/go/src/<BITBUCKET-SERVER>/{{ bitbucket_user }}/multihelm"
-#    clone: true
-#    update: false
-#  - repo: "ssh://git@<BITBUCKET-SERVER>:7999/~{{ bitbucket_user }}/k8s-deploy.git"
-#    dest: "/home/vagrant/go/src/<BITBUCKET-SERVER>/{{ bitbucket_user }}/k8s-deploy"
-#    clone: true
-#    update: false
-#    recursive: true
+git_repos:
+  - name: "github.com/cisco-sso/mh"
+    repo: "https://github.com/cisco-sso/mh"
+    dest: "/home/vagrant/go/src/github.com/cisco-sso/mh"
+    clone: true
+    update: true
+    go_get: true
 
 ## github
 github_user: none
 
 ## golang
-go_version: 1.10beta2
-go_get:
-  - name: cobra
-    url: github.com/spf13/cobra/cobra
-  - name: govc
-    url: github.com/vmware/govmomi/govc
-  - name: hub
-    url: github.com/github/hub
+## ref: https://github.com/fubarhouse/ansible-role-golang/blob/master/defaults/main.yml
+## defaults for golang role belong in: ansible-role-k8s-devkit/meta/main.yml
+go_bin: /usr/local/go/bin/go
 
 ## gomplate
 gomplate_install_path: /usr/local/bin/gomplate
@@ -77,9 +74,7 @@ gomplate_version: v2.4.0  ## ref: https://github.com/hairyhenderson/gomplate/rel
 
 ## helm
 ## ref: https://github.com/andrewrothstein/ansible-kubernetes-helm/blob/master/defaults/main.yml
-kubernetes_helm_bin_dir: /usr/local/bin
-kubernetes_helm_ver: v2.8.2
-kubernetes_helm_platform: linux-amd64
+## defaults for helm belong in: ansible-role-k8s-devkit/meta/main.yml
 
 ## helm plugins
 helm_plugins:
@@ -138,6 +133,8 @@ pip3_packages:
     version: 3.12
   - name: awscli
     version: 1.14.57
+  - name: docker-compose
+    version: 1.19.0
   - name: jinja2-cli[yaml]
     version: 0.6.0
   - name: supernova

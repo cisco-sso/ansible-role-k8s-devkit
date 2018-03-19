@@ -22,13 +22,38 @@ galaxy_info:
 
 dependencies:
 
-  - src: fubarhouse.golang
+  - role: fubarhouse.golang
     version: 2.7.2
     fubarhouse_user: "{{ kdk_user }}"
     fubarhouse_user_dir: "{{ kdk_user_home }}"
+    go_version: "1.10"
+    go_get:
+      - name: cobra
+        url: github.com/spf13/cobra/cobra
+      - name: golint
+        url: github.com/golang/lint/golint
+      - name: gopm
+        url: github.com/gpmgo/gopm
+      - name: govc
+        url: github.com/vmware/govmomi/govc
+      - name: hub
+        url: github.com/github/hub
 
-  - src: geerlingguy.docker
+  - role: geerlingguy.docker
     version: 2.1.0
+    docker_edition: ce
+    docker_install_compose: false
+    docker_package: "docker-{{ docker_edition }}"
+    docker_package_state: present
+    docker_yum_repo_enable_edge: 0
+    docker_yum_repo_enable_test: 0
+    docker_yum_repo_url: "https://download.docker.com/linux/centos/docker-{{ docker_edition }}.repo"
 
-  - src: andrewrothstein.kubernetes-helm
+  - role: andrewrothstein.kubernetes-helm
     version: v1.2.3
+    kubernetes_helm_bin_dir: /usr/local/bin
+    kubernetes_helm_platform: linux-amd64
+    kubernetes_helm_ver: v2.8.2
+    kubernetes_helm_checksums:
+      v2.8.2:
+        linux-amd64: sha256:614b5ac79de4336b37c9b26d528c6f2b94ee6ccacb94b0f4b8d9583a8dd122d3
