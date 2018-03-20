@@ -172,6 +172,37 @@
     checksum: "{{ direnv_release_checksum_type }}:{{ direnv_release_checksum }}"
     mode: 0755
 
+- name: direnv | Install bash hooks
+  become: True
+  become_user: "{{ pdk_user }}"
+  blockinfile:
+    path: "{{ pdk_user_home }}/.bashrc"
+    marker: "# {mark} direnv: ANSIBLE MANAGED BLOCK"
+    block: |-
+      # direnv: enable only if interactive shell and direnv is installed
+      if [[ -n ${PS1:-''} ]] && which direnv > /dev/null; then
+          eval "$(direnv hook bash)"
+      fi
+
+- name: screen/ssh-agent | Install bash hooks
+  become: True
+  become_user: "{{ pdk_user }}"
+  blockinfile:
+    path: "{{ pdk_user_home }}/.bashrc"
+    marker: "# {mark} screen/ssh-agent: ANSIBLE MANAGED BLOCK"
+    block: |-
+      # screen/ssh-agent: enable re-attaching screen sessions with ssh-agent support
+      #   Only if this is an interactive session that is also an ssh session
+      if [[ -n ${PS1:-''} && -n ${SSH_TTY:-''} ]] ; then
+          # if there is an SSH_AUTH_SOCK set, and it is a socket, and it is not a link
+          if [[ -n ${SSH_AUTH_SOCK:-''} && -S "$SSH_AUTH_SOCK" && ! -L "$SSH_AUTH_SOCK" ]]; then
+              # then create the link
+              rm -f ~/.ssh_auth_sock
+              ln -sf $SSH_AUTH_SOCK ~/.ssh_auth_sock
+              export SSH_AUTH_SOCK=~/.ssh_auth_sock
+          fi
+      fi
+
 - name: terraform | Detect existence.
   tags:
     - terraform
