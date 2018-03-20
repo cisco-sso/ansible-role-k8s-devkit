@@ -154,6 +154,7 @@ terraform_version: 0.11.3 ## ref: https://www.terraform.io/downloads.html
 
 ## yum
 yum_packages:
+  - name: bc
   - name: bind-utils
   - name: colordiff
   - name: dos2unix
