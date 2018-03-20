@@ -1,7 +1,9 @@
 ---
 # tasks file for ansible-role-k8s-devkit
 
-- name: go | Chown GOPATH to kdk_user.
+- name: golang | Chown GOPATH to kdk_user.
+  tags:
+    - golang
   file:
     path: "{{ GOPATH }}"
     state: directory
@@ -9,6 +11,9 @@
     recurse: true
 
 - name: dep | Install binary release.
+  tags:
+    - dep
+    - golang
   get_url:
     url: "{{ dep_release_url_base }}/{{ dep_version }}/{{ dep_release_url_suffix }}"
     dest: "{{ dep_install_path }}"
@@ -16,6 +21,9 @@
     mode: 0755
 
 - name: git | Manage repos.
+  tags:
+    - git
+    - golang
   become: True
   become_user: "{{ kdk_user }}"
   git:
@@ -29,6 +37,9 @@
   with_items: "{{ git_repos }}"
 
 - name: git | Go get repo-based packages.
+  tags:
+    - git
+    - golang
   become: True
   become_user: "{{ kdk_user }}"
   shell: |-
@@ -44,6 +55,9 @@
   changed_when: True  # Always, because 'go get' doesn't give us any actionable feedback.
 
 - name: gomplate | Install binary release.
+  tags:
+    - golang
+    - gomplate
   get_url:
     url: "{{ gomplate_release_url_base }}/{{ gomplate_version }}/{{ gomplate_release_url_suffix }}"
     dest: "{{ gomplate_install_path }}"
@@ -51,6 +65,8 @@
     mode: 0755
 
 - name: helm | Create plugins directory.
+  tags:
+    - helm
   become: True
   become_user: "{{ kdk_user }}"
   file:
@@ -59,6 +75,8 @@
     mode: 0755
 
 - name: helm | Install plugins.
+  tags:
+    - helm
   become: True
   become_user: "{{ kdk_user }}"
   shell: |-
@@ -90,6 +108,8 @@
   changed_when: not (helm_install_plugins_result.stdout | search('NOT_CHANGED'))
 
 - name: jq | Install binary release.
+  tags:
+    - jq
   get_url:
     url: "{{ jq_release_url_base }}{{ jq_version }}/{{ jq_release_url_suffix }}"
     dest: "{{ jq_install_path }}"
@@ -97,6 +117,8 @@
     mode: 0755
 
 - name: kops | Install binary release.
+  tags:
+    - kops
   get_url:
     url: "{{ kops_release_url_base }}/{{ kops_version }}/{{ kops_release_url_suffix }}"
     dest: "{{ kops_install_path }}"
@@ -104,6 +126,8 @@
     mode: 0755
 
 - name: kubectl | Install binary release.
+  tags:
+    - kubectl
   get_url:
     url: "{{ kubectl_release_url_base }}/{{ kubectl_version }}/{{ kubectl_release_url_suffix }}"
     dest: "{{ kubectl_install_path }}"
@@ -111,6 +135,8 @@
     mode: 0755
 
 - name: minikube | Install binary release.
+  tags:
+    - minikube
   get_url:
     url: "{{ minikube_release_url_base }}/{{ minikube_version }}/{{ minikube_release_url_suffix }}"
     dest: "{{ minikube_install_path }}"
@@ -118,6 +144,9 @@
     mode: 0755
 
 - name: mc | Get latest sha256 checksum.
+  tags:
+    - mc
+    - minio
   uri:
     url: "{{ mc_release_checksum_url }}"
     return_content: yes
@@ -125,6 +154,9 @@
   changed_when: False
 
 - name: mc | Install latest binary release.
+  tags:
+    - mc
+    - minio
   get_url:
     url: "{{ mc_release_url }}"
     dest: "{{ mc_install_path }}"
@@ -132,6 +164,8 @@
     mode: 0755
 
 - name: direnv | Install binary release.
+  tags:
+    - direnv
   get_url:
     url: "{{ direnv_release_url_base }}/{{ direnv_version }}/{{ direnv_release_url_suffix }}"
     dest: "{{ direnv_install_path }}"
@@ -139,16 +173,22 @@
     mode: 0755
 
 - name: terraform | Detect existence.
+  tags:
+    - terraform
   stat: "path={{ terraform_install_path }}"
   register: terraform_detect
   changed_when: False
 
 - name: terraform | Detect version.
+  tags:
+    - terraform
   shell: "{{ terraform_install_path }} version || echo none"
   register: terraform_version_detected
   changed_when: False
 
 - name: terraform | Download binary release archive.
+  tags:
+    - terraform
   get_url:
     url: "{{ terraform_release_url_base }}/{{ terraform_version }}/{{ terraform_release_url_suffix }}"
     dest: "{{ terraform_install_path }}.zip"
@@ -157,6 +197,8 @@
   when: not (terraform_version_detected.stdout | match('.*Terraform v' + terraform_version + '.*'))
 
 - name: terraform | Install binary release.
+  tags:
+    - terraform
   unarchive:
     src: "{{ terraform_install_path }}.zip"
     dest: "{{ terraform_install_path | dirname }}"
@@ -165,11 +207,17 @@
   when: not (terraform_version_detected.stdout | match('.*Terraform v' + terraform_version + '.*'))
 
 - name: terraform | Clean binary release archive.
+  tags:
+    - terraform
   file:
     path: "{{ terraform_install_path }}.zip"
     state: absent
 
 - name: pip2 | Install packages.
+  tags:
+    - pip2
+    - python
+    - python2
   pip:
     name: "{{ item.name }}"
     version: "{{ item.version | default(omit) }}"
@@ -177,6 +225,10 @@
   with_items: "{{ pip2_packages }}"
 
 - name: pip3 | Install packages.
+  tags:
+    - pip3
+    - python
+    - python3
   pip:
     name: "{{ item.name }}"
     version: "{{ item.version | default(omit) }}"
@@ -184,6 +236,8 @@
   with_items: "{{ pip3_packages }}"
 
 - name: yum | Install packages.
+  tags:
+    - yum
   yum:
     name: "{{ item.name }}"
   with_items: "{{ yum_packages }}"
