@@ -1,6 +1,13 @@
 ---
 # tasks file for ansible-role-pdk
 
+- name: go | Chown GOPATH to pdk_user.
+  file:
+    path: "{{ GOPATH }}"
+    state: directory
+    owner: "{{ pdk_user }}"
+    recurse: true
+
 - name: dep | Install binary release.
   get_url:
     url: "{{ dep_release_url_base }}/{{ dep_version }}/{{ dep_release_url_suffix }}"
@@ -44,12 +51,16 @@
     mode: 0755
 
 - name: helm | Create plugins directory.
+  become: True
+  become_user: "{{ pdk_user }}"
   file:
     path: "{{ pdk_user_home }}/.helm/plugins"
     state: directory
     mode: 0755
 
 - name: helm | Install plugins.
+  become: True
+  become_user: "{{ pdk_user }}"
   shell: |-
     #!/bin/bash
     set -euo pipefail
@@ -75,8 +86,6 @@
     ${helm} plugin install ${HELM_PLUGIN_URL} --version ${HELM_PLUGIN_VERSION}
     echo "CHANGED"
   register: helm_install_plugins_result
-  become: true
-  become_user: "{{ pdk_user }}"
   with_items: "{{ helm_plugins }}"
   changed_when: not (helm_install_plugins_result.stdout | search('NOT_CHANGED'))
 
