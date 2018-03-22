@@ -100,11 +100,11 @@ kops_version: 1.8.1  ## ref: https://github.com/kubernetes/kops/releases
 
 ## kubectl
 kubectl_install_path: /usr/local/bin/kubectl
-kubectl_release_checksum: 1649bcda95e1662da0616a5314261285fa4154d769dc4148cc339d859b564c39
+kubectl_release_checksum: c73284421dac351a800442d6424b45ce62921baf359f8fe93a7b845341d59bf3
 kubectl_release_checksum_type: sha256
 kubectl_release_url_base: https://storage.googleapis.com/kubernetes-release/release
 kubectl_release_url_suffix: bin/linux/amd64/kubectl
-kubectl_version: v1.9.4  ## ref: https://storage.googleapis.com/kubernetes-release/release/stable.txt
+kubectl_version: v1.10.0-rc.1  # ref: https://github.com/kubernetes/kubernetes/releases
 
 ## mc (minio client)
 mc_install_path: /usr/local/bin/mc
