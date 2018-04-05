@@ -36,7 +36,7 @@
     accept_hostkey: "{{ git_repos_accept_hostkey | default(false) }}"
   with_items: "{{ git_repos }}"
 
-- name: git | Go get repo-based packages.
+- name: git | Go get install repo-based packages.
   tags:
     - git
     - golang
@@ -52,6 +52,21 @@
   register: go_get_from_repo_result
   with_items: "{{ git_repos }}"
   when: item.go_get
+  changed_when: True  # Always, because 'go get' doesn't give us any actionable feedback.
+
+- name: git | Custom install.
+  tags:
+    - git
+  become: True
+  shell: |-
+    #!/bin/bash
+    set -euo pipefail
+    pushd {{ item.dest }}
+    export PATH="/usr/local/bin:${PATH}"
+    {{ item.script_body }}
+  register: go_get_from_repo_result
+  with_items: "{{ git_repos }}"
+  when: item.script
   changed_when: True  # Always, because 'go get' doesn't give us any actionable feedback.
 
 - name: gomplate | Install binary release.
