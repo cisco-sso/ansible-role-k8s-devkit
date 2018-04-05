@@ -124,6 +124,10 @@ minikube_version: v0.25.0  ## ref: https://github.com/kubernetes/minikube/releas
 pip2_packages:
   - name: PyYAML
     version: 3.12
+  - name: boto
+    version: 2.48.0
+  - name: boto3
+    version: 1.7.0
   - name: virtualenv
     version: 15.1.0
 
@@ -133,6 +137,10 @@ pip3_packages:
     version: 3.12
   - name: awscli
     version: 1.14.57
+  - name: boto
+    version: 2.48.0
+  - name: boto3
+    version: 1.7.0
   - name: docker-compose
     version: 1.19.0
   - name: jinja2-cli[yaml]
