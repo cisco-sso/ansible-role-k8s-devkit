@@ -55,6 +55,16 @@ git_repos:
     clone: true
     update: true
     go_get: true
+    script: false
+  - name: "github.com/joelpurra/gitslave.git"
+    repo: "https://github.com/joelpurra/gitslave.git"
+    dest: "/home/vagrant/go/src/github.com/joelpurra/gitslave"
+    clone: true
+    update: true
+    go_get: false
+    script: true
+    script_body: |-
+      make install
 
 ## github
 github_user: none
