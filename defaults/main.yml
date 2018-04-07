@@ -138,6 +138,8 @@ pip2_packages:
     version: 2.48.0
   - name: boto3
     version: 1.7.0
+  - name: python-openstackclient
+    version: 3.14.1
   - name: virtualenv
     version: 15.1.0
 
@@ -155,6 +157,8 @@ pip3_packages:
     version: 1.19.0
   - name: jinja2-cli[yaml]
     version: 0.6.0
+  - name: python-openstackclient
+    version: 3.14.1
   - name: supernova
     version: 2.2.0
   - name: virtualenv
