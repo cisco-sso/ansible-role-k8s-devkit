@@ -124,11 +124,11 @@ mc_release_url: https://dl.minio.io/client/mc/release/linux-amd64/mc
 
 ## minikube
 minikube_install_path: /usr/local/bin/minikube
-minikube_release_checksum: 5676f2d4f37f1c6f9cf99d56c7e1a3016976d657f9715e8cb255667a0c5803c1
+minikube_release_checksum: 3c956459ee8dad9452c97d54463f982d1d511a9afaa0f3851d88320bd5dcf58a
 minikube_release_checksum_type: sha256
 minikube_release_url_base: https://storage.googleapis.com/minikube/releases
 minikube_release_url_suffix: minikube-linux-amd64
-minikube_version: v0.25.0  ## ref: https://github.com/kubernetes/minikube/releases
+minikube_version: v0.26.1  ## ref: https://github.com/kubernetes/minikube/releases
 
 ## pip2
 pip2_packages:
@@ -191,6 +191,7 @@ yum_packages:
   - name: nmap
   - name: pigz
   - name: screen
+  - name: socat
   - name: telnet
   - name: tmux2u
   - name: traceroute

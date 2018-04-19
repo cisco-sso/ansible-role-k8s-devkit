@@ -37,6 +37,8 @@ dependencies:
         url: github.com/vmware/govmomi/govc
       - name: hub
         url: github.com/github/hub
+      - name: crictl
+        url: github.com/kubernetes-incubator/cri-tools/cmd/crictl
 
   - role: geerlingguy.docker
     version: 2.1.0
