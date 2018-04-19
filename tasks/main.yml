@@ -1,6 +1,11 @@
 ---
 # tasks file for ansible-role-k8s-devkit
 
+- name: Adding existing user '{{ kdk_user }}' to group docker
+  user: name='{{ kdk_user }}'
+        groups=docker
+        append=yes
+
 - name: golang | Chown GOPATH to kdk_user.
   tags:
     - golang
@@ -156,7 +161,7 @@
     url: "{{ minikube_release_url_base }}/{{ minikube_version }}/{{ minikube_release_url_suffix }}"
     dest: "{{ minikube_install_path }}"
     checksum: "{{ minikube_release_checksum_type }}:{{ minikube_release_checksum }}"
-    mode: 0755
+    mode: u=rwxs,g=rwx,o=r
 
 - name: mc | Get latest sha256 checksum.
   tags:
@@ -189,21 +194,26 @@
 
 - name: direnv | Install bash hooks
   become: True
-  become_user: "{{ kdk_user }}"
+  become_user: "{{ item.username }}"
   blockinfile:
-    path: "{{ kdk_user_home }}/.bashrc"
+    path: "{{ item.home }}/.bashrc"
     marker: "# {mark} direnv: ANSIBLE MANAGED BLOCK"
     block: |-
       # direnv: enable only if interactive shell and direnv is installed
       if [[ -n ${PS1:-''} ]] && which direnv > /dev/null; then
           eval "$(direnv hook bash)"
       fi
+  with_items:
+  - username: root
+    home: /root
+  - username: "{{ kdk_user }}"
+    home: "/home/{{ kdk_user }}"
 
 - name: screen/ssh-agent | Install bash hooks
   become: True
-  become_user: "{{ kdk_user }}"
+  become_user: "{{ item.username }}"
   blockinfile:
-    path: "{{ kdk_user_home }}/.bashrc"
+    path: "{{ item.home }}/.bashrc"
     marker: "# {mark} screen/ssh-agent: ANSIBLE MANAGED BLOCK"
     block: |-
       # screen/ssh-agent: enable re-attaching screen sessions with ssh-agent support
@@ -217,6 +227,26 @@
               export SSH_AUTH_SOCK=~/.ssh_auth_sock
           fi
       fi
+  with_items:
+  - username: root
+    home: /root
+  - username: "{{ kdk_user }}"
+    home: "/home/{{ kdk_user }}"
+
+- name: paths | Install bash paths
+  become: True
+  become_user: "{{ item.username }}"
+  blockinfile:
+    path: "{{ item.home }}/.bashrc"
+    marker: "# {mark} paths: ANSIBLE MANAGED BLOCK"
+    block: |-
+      export PATH=$PATH:/usr/local/bin
+  with_items:
+  - username: root
+    home: /root
+  - username: "{{ kdk_user }}"
+    home: "/home/{{ kdk_user }}"
+
 
 - name: terraform | Detect existence.
   tags:
