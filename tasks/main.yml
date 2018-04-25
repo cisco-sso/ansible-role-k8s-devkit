@@ -1,10 +1,13 @@
 ---
 # tasks file for ansible-role-pdk
 
-- name: Adding existing user '{{ pdk_user }}' to group docker
-  user: name='{{ pdk_user }}'
-        groups=docker
-        append=yes
+- name: docker | Adding existing user '{{ pdk_user }}' to group docker.
+  tags:
+    - docker
+  user:
+    name: "{{ pdk_user }}"
+    groups: docker
+    append: yes
 
 - name: golang | Chown GOPATH to pdk_user.
   tags:
@@ -14,6 +17,51 @@
     state: directory
     owner: "{{ pdk_user }}"
     recurse: true
+
+- name: easyrsa | Detect existence.
+  tags:
+    - easyrsa
+  stat: "path={{ easyrsa_install_dir }}"
+  register: easyrsa_detect
+  changed_when: False
+
+- name: easyrsa | Download release archive.
+  tags:
+    - easyrsa
+  get_url:
+    url: "{{ easyrsa_release_url }}"
+    dest: /tmp/easyrsa.tgz
+    checksum: "{{ easyrsa_release_checksum_type }}:{{ easyrsa_release_checksum }}"
+    mode: 0644
+  when: easyrsa_detect.stat.exists == False 
+
+- name: easyrsa | Install release.
+  tags:
+    - easyrsa
+  unarchive:
+    src: /tmp/easyrsa.tgz
+    dest: "{{ easyrsa_install_dir | dirname }}"
+    owner: root
+    group: root
+    remote_src: yes
+  when: easyrsa_detect.stat.exists == False 
+
+- name: easyrsa | Symlink to current release.
+  tags:
+    - easyrsa
+  file:
+    src: "{{ easyrsa_install_dir }}"
+    dest: "{{ easyrsa_install_dir_symlink }}"
+    owner: root
+    group: root
+    state: link
+
+- name: easyrsa | Clean release archive.
+  tags:
+    - easyrsa
+  file:
+    path: /tmp/easyrsa.tgz
+    state: absent
 
 - name: dep | Install binary release.
   tags:
@@ -234,19 +282,20 @@
     home: "/home/{{ pdk_user }}"
 
 - name: paths | Install bash paths
+  tags:
+    - paths
   become: True
   become_user: "{{ item.username }}"
   blockinfile:
     path: "{{ item.home }}/.bashrc"
     marker: "# {mark} paths: ANSIBLE MANAGED BLOCK"
     block: |-
-      export PATH=$PATH:/usr/local/bin
+      export PATH=$PATH:/usr/local/bin/easyrsa:/usr/local/bin
   with_items:
   - username: root
     home: /root
   - username: "{{ pdk_user }}"
     home: "/home/{{ pdk_user }}"
-
 
 - name: terraform | Detect existence.
   tags:
