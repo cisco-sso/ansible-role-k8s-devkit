@@ -46,6 +46,14 @@ direnv_version: v2.15.2  ## ref: https://github.com/direnv/direnv/releases
 ## ref: https://github.com/geerlingguy/ansible-role-docker/issues/45
 ## defaults for docker belong in: ansible-role-k8s-devkit/meta/main.yml
 
+## easy-rsa
+easyrsa_install_dir: /usr/local/bin/EasyRSA-{{ easyrsa_version }}
+easyrsa_install_dir_symlink: /usr/local/bin/easyrsa
+easyrsa_release_checksum: 472167f976c6cb7c860cec6150a5616e163ae20365c81f179811d6ee0779ec5a
+easyrsa_release_checksum_type: sha256
+easyrsa_release_url: "https://github.com/OpenVPN/easy-rsa/releases/download/v{{ easyrsa_version }}/EasyRSA-{{ easyrsa_version }}.tgz"
+easyrsa_version: 3.0.4  ## https://github.com/OpenVPN/easy-rsa/releases
+
 ## git repos
 git_repos_accept_hostkey: true
 git_repos:
