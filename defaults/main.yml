@@ -59,14 +59,14 @@ git_repos_accept_hostkey: true
 git_repos:
   - name: "github.com/cisco-sso/mh"
     repo: "https://github.com/cisco-sso/mh"
-    dest: "/home/vagrant/go/src/github.com/cisco-sso/mh"
+    dest: "{{ kdk_user_home }}/go/src/github.com/cisco-sso/mh"
     clone: true
     update: true
     go_get: true
     script: false
   - name: "github.com/joelpurra/gitslave.git"
     repo: "https://github.com/joelpurra/gitslave.git"
-    dest: "/home/vagrant/go/src/github.com/joelpurra/gitslave"
+    dest: "{{ kdk_user_home }}/go/src/github.com/joelpurra/gitslave"
     clone: true
     update: true
     go_get: false
