@@ -59,14 +59,14 @@ git_repos_accept_hostkey: true
 git_repos:
   - name: "***REMOVED***/***REMOVED***/multihelm"
     repo: "https://***REMOVED***/bitbucket/scm/***REMOVED***/multihelm.git"
-    dest: "/home/vagrant/go/src/***REMOVED***/***REMOVED***/multihelm"
+    dest: "{{ pdk_user_home }}/go/src/***REMOVED***/***REMOVED***/multihelm"
     clone: true
     update: true
     go_get: true
     script: false
   - name: "github.com/joelpurra/gitslave.git"
     repo: "https://github.com/joelpurra/gitslave.git"
-    dest: "/home/vagrant/go/src/github.com/joelpurra/gitslave"
+    dest: "{{ pdk_user_home }}/go/src/github.com/joelpurra/gitslave"
     clone: true
     update: true
     go_get: false
