@@ -37,7 +37,7 @@ case "${AWAKE_FILE_EXTENSION}" in
     ## If file extension is "jsonnet", pre-process that file before sending it into ansible-playbook.
     ##
     ansible-playbook ${_ANSIBLE_INVENTORY_STRING:-} /dev/stdin ${@} <<EOF
-[$(jsonnet "${AWAKE_FILE}")]
+$(jsonnet "${AWAKE_FILE}")
 EOF
   ;;
 
