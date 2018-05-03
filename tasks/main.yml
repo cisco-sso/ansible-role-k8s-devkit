@@ -1,6 +1,14 @@
 ---
 # tasks file for ansible-role-pdk
 
+- name: awake | Install script file.
+  tags:
+    - awake
+  copy:
+    src: awake
+    dest: "{{ awake_install_path }}"
+    mode: 0755
+
 - name: docker | Adding existing user '{{ pdk_user }}' to group docker.
   tags:
     - docker

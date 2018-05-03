@@ -22,6 +22,9 @@ pdk_user_home: /home/vagrant
 ## ansible
 ansible_roles_dir: /root/.ansible/roles
 
+## awake
+awake_install_path: /usr/local/bin/awake
+
 ## bitbucket
 bitbucket_user: none
 
