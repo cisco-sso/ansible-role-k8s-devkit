@@ -1,6 +1,14 @@
 ---
 # tasks file for ansible-role-k8s-devkit
 
+- name: awake | Install script file.
+  tags:
+    - awake
+  copy:
+    src: awake
+    dest: "{{ awake_install_path }}"
+    mode: 0755
+
 - name: docker | Adding existing user '{{ kdk_user }}' to group docker.
   tags:
     - docker
