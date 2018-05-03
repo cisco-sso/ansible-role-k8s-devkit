@@ -196,6 +196,7 @@ yum_packages:
   - name: gcc
   - name: git
   - name: graphviz
+  - name: httpd-tools
   - name: nmap
   - name: pigz
   - name: screen
