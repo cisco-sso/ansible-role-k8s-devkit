@@ -146,6 +146,10 @@ pip2_packages:
     version: 2.48.0
   - name: boto3
     version: 1.7.0
+  - name: netaddr
+    version: 0.7.19
+  - name: passlib
+    version: 1.7.1
   - name: python-neutronclient
     version: 6.8.0
   - name: python-openstackclient
@@ -167,6 +171,10 @@ pip3_packages:
     version: 1.19.0
   - name: jinja2-cli[yaml]
     version: 0.6.0
+  - name: netaddr
+    version: 0.7.19
+  - name: passlib
+    version: 1.7.1
   - name: python-neutronclient
     version: 6.8.0
   - name: python-openstackclient
