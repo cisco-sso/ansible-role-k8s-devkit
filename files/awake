@@ -32,6 +32,12 @@ if [ "${ANSIBLE_INVENTORY_LOCALHOST_ONLY}" = "True" ] ; then
   _ANSIBLE_INVENTORY_STRING=${ANSIBLE_INVENTORY_STRING:--i localhost,}
 fi
 
+## Ansible doesn't log to stdout realtime, so this is a hack to allow it.
+touch ./.awake.log
+tail -n0 -f ./.awake.log &
+AWAKE_ASYNC_LOG_PID=${!}
+trap "kill ${AWAKE_ASYNC_LOG_PID} ; rm -f ./.awake.log" EXIT
+
 case "${AWAKE_FILE_EXTENSION}" in
 
   jsonnet)
@@ -45,7 +51,10 @@ EOF
   *)
     ## In every other case (e.g. "yaml", just try it with no pre-processing.
     ##
-    ansible-playbook ${_ANSIBLE_INVENTORY_STRING:-} "${AWAKE_FILE}"
+    ansible-playbook ${_ANSIBLE_INVENTORY_STRING:-} "${AWAKE_FILE}" ${@}
   ;;
 
 esac
+
+# Allow time for async threads to align...
+sleep 2
