@@ -141,29 +141,17 @@ minikube_release_url_base: https://storage.googleapis.com/minikube/releases
 minikube_release_url_suffix: minikube-linux-amd64
 minikube_version: v0.26.1  ## ref: https://github.com/kubernetes/minikube/releases
 
-## pip2
+## pip2 (LIBRARIES ONLY)
 pip2_packages:
-  - name: PyYAML
-    version: 3.12
   - name: boto
     version: 2.48.0
   - name: boto3
     version: 1.7.0
-  - name: netaddr
-    version: 0.7.19
-  - name: passlib
-    version: 1.7.1
-  - name: python-neutronclient
-    version: 6.8.0
-  - name: python-openstackclient
-    version: 3.14.1
-  - name: virtualenv
-    version: 15.1.0
 
 ## pip3
 pip3_packages:
-  - name: PyYAML
-    version: 3.12
+  - name: ansible
+    version: 2.5.0
   - name: awscli
     version: 1.14.57
   - name: boto

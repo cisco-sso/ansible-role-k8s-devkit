@@ -25,6 +25,7 @@
     state: directory
     owner: "{{ kdk_user }}"
     recurse: true
+    follow: false
 
 - name: easyrsa | Detect existence.
   tags:
