@@ -6,7 +6,7 @@ Configures a machine with tools for Kubernetes, Helm and Docker DevOps.
 
 ## Supported Machine Targets
 
-- [vagrant-box-pdk](https://***REMOVED***/bitbucket/projects/***REMOVED***/repos/vagrant-box-pdk/browse)
+- [vagrant-box-pdk](https://bitbucket-eng-sjc1.cisco.com/bitbucket/projects/SOPD-SRE/repos/vagrant-box-pdk/browse)
 
 ## Requirements
 
@@ -28,7 +28,7 @@ A list of other roles hosted on Galaxy should go here, plus any details in regar
 
 ```yaml
 - name: ansible-role-pdk
-  src: git+https://***REMOVED***/bitbucket/scm/***REMOVED***/ansible-role-pdk.git
+  src: git+https://bitbucket-eng-sjc1.cisco.com/bitbucket/scm/sopd-sre/ansible-role-pdk.git
   version: master
 ```
 

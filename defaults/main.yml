@@ -60,9 +60,9 @@ easyrsa_version: 3.0.4  ## https://github.com/OpenVPN/easy-rsa/releases
 ## git repos
 git_repos_accept_hostkey: true
 git_repos:
-  - name: "***REMOVED***/***REMOVED***/multihelm"
-    repo: "https://***REMOVED***/bitbucket/scm/***REMOVED***/multihelm.git"
-    dest: "{{ pdk_user_home }}/go/src/***REMOVED***/***REMOVED***/multihelm"
+  - name: "bitbucket-eng-sjc1.cisco.com/sopd-sre/multihelm"
+    repo: "https://bitbucket-eng-sjc1.cisco.com/bitbucket/scm/sopd-sre/multihelm.git"
+    dest: "{{ pdk_user_home }}/go/src/bitbucket-eng-sjc1.cisco.com/sopd-sre/multihelm"
     clone: true
     update: true
     go_get: true
