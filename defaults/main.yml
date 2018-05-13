@@ -207,4 +207,5 @@ yum_packages:
   - name: traceroute
   - name: tree
   - name: vim-enhanced
+  - name: yadm
   - name: zsh

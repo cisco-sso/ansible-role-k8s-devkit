@@ -369,6 +369,19 @@
     executable: pip3.6
   with_items: "{{ pip3_packages }}"
 
+- name: Add repository
+  tags:
+    - yum
+  yum_repository:
+    name: thelocehiliosan-yadm
+    description: Copr repo for yadm owned by thelocehiliosan
+    baseurl: https://copr-be.cloud.fedoraproject.org/results/thelocehiliosan/yadm/epel-7-$basearch/
+    skip_if_unavailable: yes
+    gpgcheck: yes
+    gpgkey: https://copr-be.cloud.fedoraproject.org/results/thelocehiliosan/yadm/pubkey.gpg
+    repo_gpgcheck: no
+    enabled: yes
+
 - name: yum | Install packages.
   tags:
     - yum
