@@ -76,6 +76,8 @@ git_repos:
     script: true
     script_body: |-
       make install
+      # Fix permissions
+      chown -R {{ kdk_user }}:{{ kdk_user }} {{ kdk_user_home }}/go/src/github.com/joelpurra/gitslave
 
 ## github
 github_user: none
