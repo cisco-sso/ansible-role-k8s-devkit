@@ -66,7 +66,10 @@ git_repos:
     clone: true
     update: true
     go_get: true
-    script: false
+    script: true
+    script_body: |-
+      # For backwards compatibility
+      ln -sf {{ kdk_user_home }}/go/bin/mh {{ kdk_user_home }}/go/bin/multihelm
   - name: "github.com/joelpurra/gitslave.git"
     repo: "https://github.com/joelpurra/gitslave.git"
     dest: "{{ kdk_user_home }}/go/src/github.com/joelpurra/gitslave"
