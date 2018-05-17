@@ -203,6 +203,8 @@ yum_packages:
   - name: git
   - name: graphviz
   - name: httpd-tools
+  - name: kernel-devel
+  - name: man-pages
   - name: nmap
   - name: pigz
   - name: screen
