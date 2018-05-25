@@ -183,6 +183,8 @@ pip3_packages:
     version: 2.3.3
   - name: openshift
     version: 0.5.0
+  - name: pyvmomi
+    version: 6.7.0
 
 ## terraform
 terraform_install_path: /usr/local/bin/terraform
