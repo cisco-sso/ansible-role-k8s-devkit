@@ -62,17 +62,17 @@ git_repos_accept_hostkey: true
 git_repos:
   - name: "github.com/cisco-sso/mh"
     repo: "https://github.com/cisco-sso/mh"
-    dest: "{{ kdk_user_home }}/go/src/github.com/cisco-sso/mh"
+    dest: "/go/src/github.com/cisco-sso/mh"
     clone: true
     update: true
     go_get: true
     script: true
     script_body: |-
       # For backwards compatibility
-      ln -sf {{ kdk_user_home }}/go/bin/mh {{ kdk_user_home }}/go/bin/multihelm
+      ln -sf /go/bin/mh /go/bin/multihelm
   - name: "github.com/joelpurra/gitslave.git"
     repo: "https://github.com/joelpurra/gitslave.git"
-    dest: "{{ kdk_user_home }}/go/src/github.com/joelpurra/gitslave"
+    dest: "/go/src/github.com/joelpurra/gitslave"
     clone: true
     update: true
     go_get: false
@@ -80,7 +80,7 @@ git_repos:
     script_body: |-
       make install
       # Fix permissions
-      chown -R {{ kdk_user }}:{{ kdk_user }} {{ kdk_user_home }}/go/src/github.com/joelpurra/gitslave
+      chown -R {{ kdk_user }}:{{ kdk_user }} /go/src/github.com/joelpurra/gitslave
 
 ## github
 github_user: none
