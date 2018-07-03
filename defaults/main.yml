@@ -156,7 +156,7 @@ pip2_packages:
 ## pip3
 pip3_packages:
   - name: ansible
-    version: 2.5.0
+    version: 2.6.0
   - name: awscli
     version: 1.14.57
   - name: boto
