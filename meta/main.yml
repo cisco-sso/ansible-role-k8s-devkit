@@ -25,6 +25,7 @@ dependencies:
       - golang
     fubarhouse_user: "{{ kdk_user }}"
     fubarhouse_user_dir: "{{ kdk_user_home }}"
+    GOPATH: /go
     go_version: "1.10"
     go_get:
       - name: cobra
