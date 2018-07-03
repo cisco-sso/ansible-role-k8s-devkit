@@ -21,7 +21,7 @@
   tags:
     - golang
   file:
-    path: "{{ GOPATH }}"
+    path: /go
     state: directory
     owner: "{{ kdk_user }}"
     recurse: true
