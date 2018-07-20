@@ -389,3 +389,11 @@
   yum:
     name: "{{ item.name }}"
   with_items: "{{ yum_packages }}"
+
+- name: Drone client
+  tags:
+    - drone
+  unarchive:
+    src: http://downloads.drone.io/release/linux/amd64/drone.tar.gz
+    dest: /usr/local/bin
+    remote_src: True
