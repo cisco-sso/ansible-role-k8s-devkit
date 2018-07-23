@@ -218,3 +218,9 @@ yum_packages:
   - name: vim-enhanced
   - name: yadm
   - name: zsh
+
+## drone
+drone_install_dir: /usr/local/bin/drone
+drone_release_checksum_type: sha256
+drone_release_checksum_url: http://downloads.drone.io/release/linux/amd64/drone.sha256
+drone_release_url: http://downloads.drone.io/release/linux/amd64/drone.tar.gz
