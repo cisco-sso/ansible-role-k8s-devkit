@@ -9,6 +9,43 @@
     dest: "{{ awake_install_path }}"
     mode: 0755
 
+- name: drone | Detect existence.
+  tags:
+    - drone
+  stat: "path={{ drone_install_dir }}"
+  register: drone_detect
+  changed_when: False
+
+- name: drone | Get latest sha256 checksum.
+  tags:
+    - drone
+  uri:
+    url: "{{ drone_release_checksum_url }}"
+    return_content: yes
+  register: drone_release_checksum
+  when: drone_detect.stat.exists == False 
+
+- name: drone | Download release archive.
+  tags:
+    - drone
+  get_url:
+    url: "{{ drone_release_url }}"
+    dest: /tmp/drone.tar.gz
+    checksum: "{{ drone_release_checksum_type }}:{{ drone_release_checksum.content.split(' ')[0] }}"
+    mode: 0644
+  when: drone_detect.stat.exists == False 
+
+- name: drone | Install release.
+  tags:
+    - drone
+  unarchive:
+    src: /tmp/drone.tar.gz
+    dest: "{{ drone_install_dir | dirname }}"
+    owner: root
+    group: root
+    remote_src: yes
+  when: drone_detect.stat.exists == False 
+
 - name: docker | Adding existing user '{{ kdk_user }}' to group docker.
   tags:
     - docker
@@ -389,40 +426,3 @@
   yum:
     name: "{{ item.name }}"
   with_items: "{{ yum_packages }}"
-
-- name: drone | Detect existence.
-  tags:
-    - drone
-  stat: "path={{ drone_install_dir }}"
-  register: drone_detect
-  changed_when: False
-
-- name: drone | Get latest sha256 checksum.
-  tags:
-    - drone
-  uri:
-    url: "{{ drone_release_checksum_url }}"
-    return_content: yes
-  register: drone_release_checksum
-  when: drone_detect.stat.exists == False 
-
-- name: drone | Download release archive.
-  tags:
-    - drone
-  get_url:
-    url: "{{ drone_release_url }}"
-    dest: /tmp/drone.tar.gz
-    checksum: "{{ drone_release_checksum_type }}:{{ drone_release_checksum.content.split(' ')[0] }}"
-    mode: 0644
-  when: drone_detect.stat.exists == False 
-
-- name: drone | Install release.
-  tags:
-    - drone
-  unarchive:
-    src: /tmp/drone.tar.gz
-    dest: "{{ drone_install_dir | dirname }}"
-    owner: root
-    group: root
-    remote_src: yes
-  when: drone_detect.stat.exists == False 
