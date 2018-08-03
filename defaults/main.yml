@@ -218,6 +218,8 @@ yum_packages:
   - name: vim-enhanced
   - name: yadm
   - name: zsh
+  - name: bash-completion
+  - name: bash-completion-extras
 
 ## drone
 drone_install_dir: /usr/local/bin/drone

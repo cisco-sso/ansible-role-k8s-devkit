@@ -426,3 +426,10 @@
   yum:
     name: "{{ item.name }}"
   with_items: "{{ yum_packages }}"
+
+- name: Generate bash completion
+  become: True
+  shell: |-
+    #!/bin/bash
+    "{{ kubectl_install_path }}" completion bash > /etc/bash_completion.d/kubectl_completion.sh
+    "{{ kubernetes_helm_bin_dir }}/helm" completion bash > /etc/bash_completion.d/helm_completion.sh
