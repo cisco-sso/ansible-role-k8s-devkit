@@ -244,10 +244,21 @@
   tags:
     - kubectl
   get_url:
-    url: "{{ kubectl_release_url_base }}/{{ kubectl_version }}/{{ kubectl_release_url_suffix }}"
-    dest: "{{ kubectl_install_path }}"
-    checksum: "{{ kubectl_release_checksum_type }}:{{ kubectl_release_checksum }}"
+    url: "{{ kubectl_release_url_base }}/{{ item.0 }}/{{ kubectl_release_url_suffix }}"
+    dest: "{{ kubectl_install_path }}_{{ item.0 }}"
+    checksum: "{{ kubectl_release_checksum_type }}:{{ item.1 }}"
     mode: 0755
+  with_together:
+    - "{{ kubectl_versions }}"
+    - "{{ kubectl_release_checksums }}"
+
+- name: kubectl | Create symlink to newest version.
+  tags:
+    - kubectl
+  file:
+    src: "{{ kubectl_install_path }}_{{ kubectl_versions[0] }}"
+    dest: "{{ kubectl_install_path }}"
+    state: link
 
 - name: minikube | Install binary release.
   tags:
