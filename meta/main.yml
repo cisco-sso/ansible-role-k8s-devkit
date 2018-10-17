@@ -31,7 +31,7 @@ dependencies:
       - name: cobra
         url: github.com/spf13/cobra/cobra
       - name: golint
-        url: github.com/golang/lint/golint
+        url: golang.org/x/lint/golint
       - name: gopm
         url: github.com/gpmgo/gopm
       - name: govc
